@@ -1,0 +1,198 @@
+object frmMain: TfrmMain
+  Left = 569
+  Height = 800
+  Top = 250
+  Width = 1200
+  Caption = 'RTW Region Picker'
+  ClientHeight = 800
+  ClientWidth = 1200
+  DesignTimePPI = 144
+  Menu = mnuMain
+  OnCreate = FormCreate
+  object pnlConfig: TPanel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 0
+    Height = 120
+    Top = 0
+    Width = 1200
+    Anchors = [akTop, akLeft, akRight]
+    ClientHeight = 120
+    ClientWidth = 1200
+    TabOrder = 1
+    object btnCampaignDir: TButton
+      AnchorSideLeft.Control = edtCampaignDir
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = edtCampaignDir
+      Left = 633
+      Height = 35
+      Top = 50
+      Width = 83
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'Browse'
+      OnClick = btnCampaignDirClick
+      TabOrder = 0
+    end
+    object rgGameMode: TRadioGroup
+      AnchorSideLeft.Control = btnCampaignDir
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = btnCampaignDir
+      AnchorSideTop.Side = asrCenter
+      AnchorSideBottom.Control = btnCampaignDir
+      AnchorSideBottom.Side = asrBottom
+      Left = 748
+      Height = 88
+      Top = -3
+      Width = 117
+      Anchors = [akLeft, akBottom]
+      AutoFill = True
+      AutoSize = True
+      BorderSpacing.Left = 32
+      Caption = 'Game Mode'
+      ChildSizing.LeftRightSpacing = 6
+      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+      ChildSizing.EnlargeVertical = crsHomogenousChildResize
+      ChildSizing.ShrinkHorizontal = crsScaleChilds
+      ChildSizing.ShrinkVertical = crsScaleChilds
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 58
+      ClientWidth = 113
+      ItemIndex = 0
+      Items.Strings = (
+        'RTW'
+        'BI'
+      )
+      TabOrder = 1
+    end
+    object rgOutputMode: TRadioGroup
+      AnchorSideLeft.Control = rgGameMode
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = rgGameMode
+      AnchorSideTop.Side = asrCenter
+      AnchorSideBottom.Control = rgGameMode
+      AnchorSideBottom.Side = asrBottom
+      Left = 897
+      Height = 88
+      Top = -3
+      Width = 168
+      Anchors = [akLeft, akBottom]
+      AutoFill = True
+      AutoSize = True
+      BorderSpacing.Left = 32
+      Caption = 'Output Mode'
+      ChildSizing.LeftRightSpacing = 6
+      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+      ChildSizing.EnlargeVertical = crsHomogenousChildResize
+      ChildSizing.ShrinkHorizontal = crsScaleChilds
+      ChildSizing.ShrinkVertical = crsScaleChilds
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 58
+      ClientWidth = 164
+      ItemIndex = 0
+      Items.Strings = (
+        'Merc Pool'
+        'Win Conditions'
+      )
+      OnSelectionChanged = rgOutputModeSelectionChanged
+      TabOrder = 2
+    end
+    object edtCampaignDir: TEdit
+      AnchorSideLeft.Control = lblCampaignDir
+      AnchorSideTop.Control = lblCampaignDir
+      AnchorSideTop.Side = asrBottom
+      Left = 17
+      Height = 33
+      Top = 50
+      Width = 600
+      BorderSpacing.Top = 8
+      TabOrder = 3
+    end
+    object lblCampaignDir: TLabel
+      AnchorSideLeft.Control = pnlConfig
+      AnchorSideTop.Control = pnlConfig
+      Left = 17
+      Height = 25
+      Top = 17
+      Width = 158
+      BorderSpacing.Left = 16
+      BorderSpacing.Top = 16
+      Caption = 'Campaign Directory'
+      ParentColor = False
+    end
+  end
+  object imgRegionMap: TImage
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = pnlConfig
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = sgRegions
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 0
+    Height = 680
+    Top = 120
+    Width = 1200
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    OnClick = imgRegionMapClick
+    Proportional = True
+    Stretch = True
+  end
+  object sgRegions: TStringGrid
+    AnchorSideLeft.Control = Owner
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = pnlConfig
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 1200
+    Height = 680
+    Top = 120
+    Width = 0
+    Anchors = [akTop, akRight, akBottom]
+    ColCount = 3
+    ColumnClickSorts = True
+    Columns = <    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Title.Caption = 'Picked'
+        Width = 100
+      end    
+      item
+        ReadOnly = True
+        Title.Caption = 'Region'
+        Width = 100
+      end    
+      item
+        Title.Caption = 'Settlement'
+        Width = 100
+      end>
+    FixedCols = 0
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goThumbTracking, goSmoothScroll]
+    RowCount = 1
+    TabOrder = 0
+    OnCheckboxToggled = sgRegionsCheckboxToggled
+    ColWidths = (
+      100
+      100
+      100
+    )
+  end
+  object dlgCampaignDir: TSelectDirectoryDialog
+    Left = 336
+    Top = 488
+  end
+  object mnuMain: TMainMenu
+    Left = 560
+    Top = 488
+    object mnuAbout: TMenuItem
+      Caption = 'About'
+      OnClick = mnuAboutClick
+    end
+  end
+end
