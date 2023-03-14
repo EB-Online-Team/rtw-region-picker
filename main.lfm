@@ -1,5 +1,5 @@
 object frmMain: TfrmMain
-  Left = 569
+  Left = 0
   Height = 800
   Top = 250
   Width = 1200
@@ -129,20 +129,32 @@ object frmMain: TfrmMain
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = pnlConfig
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = sgRegions
+    AnchorSideRight.Control = splMapGrid
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 0
     Height = 680
     Top = 120
-    Width = 1200
+    Width = 800
     Anchors = [akTop, akLeft, akRight, akBottom]
     OnClick = imgRegionMapClick
     Proportional = True
     Stretch = True
   end
+  object splMapGrid: TSplitter
+    AnchorSideTop.Control = pnlConfig
+    AnchorSideTop.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 800
+    Height = 680
+    Top = 120
+    Width = 8
+    Align = alNone
+    Anchors = [akTop, akBottom]
+  end
   object sgRegions: TStringGrid
-    AnchorSideLeft.Control = Owner
+    AnchorSideLeft.Control = splMapGrid
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = pnlConfig
     AnchorSideTop.Side = asrBottom
@@ -150,46 +162,47 @@ object frmMain: TfrmMain
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 1200
+    Left = 808
     Height = 680
     Top = 120
-    Width = 0
-    Anchors = [akTop, akRight, akBottom]
+    Width = 392
+    Anchors = [akTop, akLeft, akRight, akBottom]
     ColCount = 3
     ColumnClickSorts = True
     Columns = <    
       item
         ButtonStyle = cbsCheckboxColumn
         Title.Caption = 'Picked'
-        Width = 100
+        Width = 64
       end    
       item
         ReadOnly = True
         Title.Caption = 'Region'
-        Width = 100
+        Width = 150
       end    
       item
+        ReadOnly = True
         Title.Caption = 'Settlement'
-        Width = 100
+        Width = 150
       end>
     FixedCols = 0
-    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goThumbTracking, goSmoothScroll]
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goEditing, goThumbTracking, goDblClickAutoSize, goSmoothScroll, goCellEllipsis, goRowHighlight]
     RowCount = 1
     TabOrder = 0
     OnCheckboxToggled = sgRegionsCheckboxToggled
     ColWidths = (
-      100
-      100
-      100
+      64
+      150
+      150
     )
   end
   object dlgCampaignDir: TSelectDirectoryDialog
-    Left = 336
-    Top = 488
+    Left = 240
+    Top = 376
   end
   object mnuMain: TMainMenu
-    Left = 560
-    Top = 488
+    Left = 432
+    Top = 376
     object mnuAbout: TMenuItem
       Caption = 'About'
       OnClick = mnuAboutClick

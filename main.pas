@@ -26,12 +26,15 @@ type
     rgGameMode: TRadioGroup;
     dlgCampaignDir: TSelectDirectoryDialog;
     sgRegions: TStringGrid;
+    splMapGrid: TSplitter;
     procedure btnCampaignDirClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure imgRegionMapClick(Sender: TObject);
     procedure mnuAboutClick(Sender: TObject);
     procedure rgOutputModeSelectionChanged(Sender: TObject);
     procedure sgRegionsCheckboxToggled(Sender: TObject);
+    procedure SortRegions;
+    function CountPickedRegions: integer;
   private
     OutputMode: TOutputMode;
     RegionDict: TRegionDictionary;
@@ -40,7 +43,7 @@ type
 
 const
   TITLE: string = 'RTW Region Picker';
-  VERSION: string = 'v1.0.0';
+  VERSION: string = 'v1.0.1';
   AUTHOR: string = 'Vartan Haghverdi';
   COPYRIGHT: string = 'Copyright 2023';
   NOTE: string = 'Brought to you by the EB Online Team';
@@ -113,9 +116,7 @@ begin
           RegionDict[RegionColor].Settlement]);
         i := i + 1;
       end;
-      sgRegions.AutoSizeColumns;
-      sgRegions.Width := sgRegions.Columns[0].Width +
-        sgRegions.Columns[1].Width + sgRegions.Columns[2].Width + 32;
+      sgRegions.AutoSizeColumn(0);
       sgRegions.SortColRow(True, 1);
 
       // load map_regions.tga
@@ -178,12 +179,7 @@ begin
     else
       PickedStatus := '0';
     sgRegions.Rows[RowIndex][0] := PickedStatus;
-
-    // sort by picked regions first then force scroll to top
-    sgRegions.SortOrder := soDescending;
-    sgRegions.SortColRow(True, 0);
-    sgRegions.ScrollBy(0, 0);
-
+    SortRegions;
     SavePickedRegionsToFile('regions.txt', sgRegions, OutputMode);
   end;
 end;
@@ -200,13 +196,37 @@ begin
     0: OutputMode := omMercPool;
     1: OutputMode := omWinCondition;
   end;
+  SortRegions;
   SavePickedRegionsToFile('regions.txt', sgRegions, OutputMode);
 end;
 
 procedure TfrmMain.sgRegionsCheckboxToggled(Sender: TObject);
 begin
+  SortRegions;
   SavePickedRegionsToFile('regions.txt', sgRegions, OutputMode);
 end;
 
+procedure TfrmMain.SortRegions;
+begin
+  sgRegions.SortOrder := soDescending;
+  sgRegions.SortColRow(True, 0);
+  sgRegions.SortOrder := soAscending;
+  if OutputMode = omMercPool then
+    sgRegions.SortColRow(True, 1, 1, CountPickedRegions)
+  else if OutputMode = omWinCondition then
+    sgRegions.SortColRow(True, 2, 1, CountPickedRegions);
+  sgRegions.ScrollBy(0, 0);
+end;
+
+function TfrmMain.CountPickedRegions: integer;
+var
+  RowIndex: integer;
+begin
+  Result := 0;
+  if sgRegions.RowCount > 1 then
+    for RowIndex := 1 to sgRegions.RowCount - 1 do
+      if sgRegions.Rows[RowIndex][0] = '1' then
+        Result := Result + 1;
+end;
 
 end.
