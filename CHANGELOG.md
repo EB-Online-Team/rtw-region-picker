@@ -30,6 +30,6 @@
 
 - GUI app written in Object Pascal (Lazarus IDE, FreePascal compiler) to pick regions from _Rome: Total War_ modifications.
 
-[1.0.1]: https://gitlab.com/eb-online/tools/rtw-region-picker/-/compare/v1.0.1...v1.1.0
+[1.1.0]: https://gitlab.com/eb-online/tools/rtw-region-picker/-/compare/v1.0.1...v1.1.0
 [1.0.1]: https://gitlab.com/eb-online/tools/rtw-region-picker/-/compare/v1.0.0...v1.0.1
 [1.0.0]: https://gitlab.com/eb-online/tools/rtw-region-picker/-/releases/v1.0.0
